@@ -22,6 +22,32 @@ int heightofTree(Node* root){
     int height =max(ls,rs)+1;
     return height;
 }
+void bfs(Node* root){
+    queue<Node*> q;
+    q.push(root);
+    q.push(NULL);
+    while(!q.empty()){
+        Node* f= q.front();
+        if(f==NULL){
+            cout<<endl;
+            q.pop();
+            if(!q.empty()){
+                q.push(NULL);
+            }
+        }
+        else{
+        cout<<f->data<<" ";
+        q.pop();
+        if(f->left){
+            q.push(f->left);
+            }
+        if(f->right){
+            q.push(f->right);
+        }
+        }
+    }
+
+}
 void PrintKthlevel(Node* root,int k){
     if(root==NULL){
         return;
