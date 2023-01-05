@@ -1,0 +1,77 @@
+best approach - two pointer Approach
+#include <bits/stdc++.h> 
+using namespace std;
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   // Write your code here.
+    vector<vector<int>>res;
+    sort(arr.begin(),arr.end());
+    int i=0,j=1;
+    //arr.push_back(1e5);
+    while(i<arr.size()-1){
+        if(arr[i]+arr[j]==s){
+            res.push_back({arr[i],arr[j]});
+            j++;
+        }
+        else if(arr[i]+arr[j]<s){
+            j++;
+        }
+        else{
+            i++;
+            j=i+1;
+        }
+    }
+    
+//     sort(res.begin(),res.end());
+    return res;
+}
+
+2nd Best APPROACH USING HASHMAP
+#include <bits/stdc++.h> 
+using namespace std;
+vector<vector<int>> pairSum(vector<int> &arr, int s){
+   // Write your code here.
+    map<int,int>mp;
+   for(int i=0;i<arr.size();i++){
+        mp[arr[i]]++;
+   }
+    vector<vector<int>>res;
+    for(auto it=mp.begin();it!=mp.end();it++){
+        auto x=*it;
+        int k=x.first;
+        int temp=mp[k]*mp[s-k];
+        if(!temp) continue;
+        if(temp<0) break;
+        int ss=k, l=s-k;
+        if(s-k<k){
+            int t=ss;
+            ss=l;
+            l=t;
+        }
+        if(k==s-k){
+            temp=(mp[k]*(mp[k]-1))/2;
+        }
+        while(temp--){
+            res.push_back({ss,l});
+        }
+        mp[k]=-1;
+    }
+//     sort(res.begin(),res.end());
+    return res;
+}
+WORST APPROACH USING NESTED LOOP
+vector< vector<int> > pairSum(vector<int> &arr, int s){
+    int n = arr.size();
+    // Used to store result.
+    vector< vector<int> > ans;
+        
+    // Checking sum for every element.
+    for(int i = 0; i < n; i++) {
+        for(int j = i + 1; j < n; j++) {
+            if(arr[i] + arr[j] == s) {
+                vector<int> pair(2);
+                pair[0] = arr[i];
+                pair[1] = arr[j];
+                ans.push_back(pair);
+            }
+        }
+    }
