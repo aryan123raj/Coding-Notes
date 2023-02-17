@@ -1,0 +1,98 @@
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        int n=matrix.size();
+        int m=matrix[0].size();
+        unordered_set<int>zrows, zcols;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(matrix[i][j]==0){
+                    zrows.insert(i);
+                    zcols.insert(j);
+                }
+
+            }
+        }
+        for(auto& a:zrows){
+            for(int i=0;i<m;i++){
+                matrix[a][i]=0;
+            }                                            
+        }
+        for(auto& a:zcols){
+            for(int i=0;i<n;i++){
+                matrix[i][a]=0;
+            }
+        }
+    
+    }
+};
+
+2nd approach
+#include <bits/stdc++.h> 
+int countFlip(vector<vector<int>> &mat)
+{
+	int n=mat.size();
+	vector<bool>rows(n, false), cols(n, false);
+	int total_ones=0;
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(mat[i][j]==1) total_ones++;
+			else{
+				rows[i]=true;
+				cols[j]=true;
+			}
+		}
+	}
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			if(rows[i]==false && cols[j]==false && mat[i][j]==1){
+				total_ones--;
+			}
+		}
+	}
+	return total_ones;
+
+}
+
+3rd and bruteforce approach
+	Time Complexity: O(N ^ 3)
+	Space Complexity: O(1)
+
+	Where 'N' is the number of rows and columns in matrix 'MAT'.
+*/
+
+int countFlip(vector<vector<int>> &mat)
+{
+	int n = mat.size();
+
+	// Mark the flipped bits as -1 and increment count.
+	int count = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (mat[i][j] == 0)
+			{
+				// Use 'k' as a variable to iterate through row and column.
+				for (int k = 0; k < n; k++)
+				{
+					// Check every column.
+					if (mat[i][k] == 1)
+					{
+						count++;
+						mat[i][k] = -1;
+					}
+					// Check every row.
+					if (mat[k][j] == 1)
+					{
+						count++;
+						mat[k][j] = -1;
+					}
+				}
+			}
+		}
+	}
+
+	return count;
+} 
